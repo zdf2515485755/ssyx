@@ -2,6 +2,7 @@ package com.zdf.ssyxweb.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zdf.internalcommon.constant.BaseConstant;
 import com.zdf.internalcommon.entity.AdminRole;
 import com.zdf.internalcommon.result.ResponseResult;
 import com.zdf.ssyxweb.mapper.AdminRoleMapper;
@@ -26,7 +27,8 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
 
     public List<AdminRole> selectRoleIdByUserId(Long userId){
         QueryWrapper<AdminRole> adminRoleQueryWrapper = new QueryWrapper<>();
-        adminRoleQueryWrapper.eq("admin_id", userId);
+        adminRoleQueryWrapper.eq("admin_id", userId)
+                .eq("is_deleted", BaseConstant.NOTDELETE);
         return adminRoleMapper.selectList(adminRoleQueryWrapper);
     }
 

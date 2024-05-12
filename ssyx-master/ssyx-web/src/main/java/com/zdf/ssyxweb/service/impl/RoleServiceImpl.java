@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.zdf.internalcommon.constant.BaseConstant;
 import com.zdf.internalcommon.constant.StatusCode;
 import com.zdf.internalcommon.entity.AdminRole;
 import com.zdf.internalcommon.entity.Role;
@@ -44,7 +45,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
         String roleName = pageQueryRequestDto.getRoleName();
 
         if (!Objects.isNull(pageQueryRequestDto.getRoleName())){
-            roleQueryWrapper.like("role_name", roleName);
+            roleQueryWrapper.like("role_name", roleName)
+                    .eq("is_deleted", BaseConstant.NOTDELETE);
         }
         Page<Role> selectPage = roleMapper.selectPage(rolePage, roleQueryWrapper);
         return ResponseResult.success(selectPage);
