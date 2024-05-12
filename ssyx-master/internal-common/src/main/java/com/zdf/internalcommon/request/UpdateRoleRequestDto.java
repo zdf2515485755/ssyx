@@ -4,10 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 
 /**
- *@Description 类功能简要描述
+ *@Description Update Role Request Dto
  *@Author mrzhang
  *@Date 2024/5/11 23:47
  */
@@ -15,7 +15,7 @@ import javax.validation.constraints.NotBlank;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UpdateRoleRequestDto {
-    @NotBlank(message = "id can not be empty")
+    @NotNull(message = "id can not be empty")
     private Long id;
     private String roleName;
 

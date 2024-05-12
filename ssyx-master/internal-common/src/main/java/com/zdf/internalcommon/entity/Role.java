@@ -1,8 +1,10 @@
 package com.zdf.internalcommon.entity;
 
 import com.baomidou.mybatisplus.annotation.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
@@ -14,6 +16,8 @@ import java.io.Serializable;
 @EqualsAndHashCode(callSuper = true)
 @TableName(value ="role")
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class Role extends BaseEntity implements Serializable {
     /**
      * 角色id
@@ -35,12 +39,6 @@ public class Role extends BaseEntity implements Serializable {
      * 备注
      */
     private String remark;
-
-    /**
-     * 删除标记（0:不可用 1:可用）
-     */
-    @TableLogic
-    private Integer isDeleted;
 
     @TableField(exist = false)
     private static final long serialVersionUID = 1L;

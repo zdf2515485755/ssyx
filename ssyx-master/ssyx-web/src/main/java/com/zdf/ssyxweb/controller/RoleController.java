@@ -10,6 +10,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 /**
  *@Description API for operating roles
@@ -24,7 +26,7 @@ public class RoleController {
     private RoleServiceImpl roleService;
 
     @GetMapping("/selectRole")
-    public ResponseResult<Page> selectRole(@RequestBody PageQueryRequestDto pageQueryRequestDto){
+    public ResponseResult<Page> selectRole(@Validated @RequestBody PageQueryRequestDto pageQueryRequestDto){
         return roleService.selectRole(pageQueryRequestDto);
     }
 
@@ -34,17 +36,17 @@ public class RoleController {
     }
 
     @PutMapping("/updateRole")
-    public ResponseResult<Integer> updateRole(@RequestBody UpdateRoleRequestDto updateRoleRequestDto){
+    public ResponseResult<Integer> updateRole(@Validated @RequestBody UpdateRoleRequestDto updateRoleRequestDto){
         return roleService.updateRole(updateRoleRequestDto);
     }
 
     @DeleteMapping("/deleteRole/{id}")
-    public ResponseResult<Integer> deleteRole(@PathVariable("id") Long id){
+    public ResponseResult<Integer> deleteRole(@NotNull @PathVariable("id") Long id){
         return roleService.deleteRole(id);
     }
 
     @DeleteMapping("/batchDelete")
-    public ResponseResult<Integer> batchDeleteRole(@RequestParam("ids") Long[] ids){
+    public ResponseResult<Integer> batchDeleteRole(@NotEmpty @RequestParam("ids") Long[] ids){
         return roleService.batchDeleteRole(ids);
     }
 }
