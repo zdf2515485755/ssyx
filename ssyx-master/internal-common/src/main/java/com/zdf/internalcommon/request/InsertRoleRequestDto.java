@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.validation.constraints.NotBlank;
 
 /**
- *@Description 类功能简要描述
+ *@Description Insert Role Request Dto
  *@Author mrzhang
  *@Date 2024/5/11 22:52
  */

@@ -2,6 +2,7 @@ package com.zdf.internalcommon.entity;
 
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
@@ -27,4 +28,10 @@ public class BaseEntity {
     @TableField(fill = FieldFill.INSERT_UPDATE)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
+
+    /**
+     * 删除标记（0:不可用 1:可用）
+     */
+    @TableLogic
+    private Integer isDeleted;
 }

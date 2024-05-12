@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zdf.internalcommon.constant.StatusCode;
+import com.zdf.internalcommon.entity.AdminRole;
 import com.zdf.internalcommon.entity.Role;
 import com.zdf.internalcommon.request.InsertRoleRequestDto;
 import com.zdf.internalcommon.request.PageQueryRequestDto;
@@ -14,10 +15,13 @@ import com.zdf.ssyxweb.mapper.RoleMapper;
 import com.zdf.ssyxweb.service.RoleService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import javax.annotation.Resource;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 /**
 * @author mrzhang
@@ -30,6 +34,8 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
 
     @Resource
     private RoleMapper roleMapper;
+    @Resource
+    private AdminRoleServiceImpl adminRoleService;
 
     @Override
     public ResponseResult<Page> selectRole(PageQueryRequestDto pageQueryRequestDto) {
@@ -88,6 +94,13 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
             return ResponseResult.fail(StatusCode.DELETE_ROLE_ERROR.getCode(), StatusCode.DELETE_ROLE_ERROR.getMessage());
         }
         return ResponseResult.success(count);
+    }
+
+    @Override
+    public ResponseResult<List<Role>> selectRoleByUserId(@PathVariable("id") Long userId) {
+        List<AdminRole> adminRoles = adminRoleService.selectRoleIdByUserId(userId);
+        List<Role> roleList = adminRoles.stream().map(adminRole -> roleMapper.selectById(adminRole.getRoleId())).collect(Collectors.toList());
+        return ResponseResult.success(roleList);
     }
 }
 
