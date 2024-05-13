@@ -67,6 +67,7 @@ public class RoleServiceImpl extends ServiceImpl<RoleMapper, Role>
     public ResponseResult<Integer> updateRole(UpdateRoleRequestDto updateRoleRequestDto) {
         UpdateWrapper<Role> roleUpdateWrapper = new UpdateWrapper<>();
         roleUpdateWrapper.eq("id", updateRoleRequestDto.getId())
+                .eq("is_deleted", BaseConstant.NOTDELETE)
                 .set(updateRoleRequestDto.getRoleCode() != null && !updateRoleRequestDto.getRoleCode().isEmpty(), "role_code", updateRoleRequestDto.getRoleCode())
                 .set(updateRoleRequestDto.getRoleName() != null && !updateRoleRequestDto.getRoleName().isEmpty(), "role_name", updateRoleRequestDto.getRoleName())
                 .set(updateRoleRequestDto.getRemark() != null && !updateRoleRequestDto.getRemark().isEmpty(), "remark", updateRoleRequestDto.getRemark());
