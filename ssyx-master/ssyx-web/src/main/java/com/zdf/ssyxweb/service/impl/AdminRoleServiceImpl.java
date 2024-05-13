@@ -3,6 +3,7 @@ package com.zdf.ssyxweb.service.impl;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zdf.internalcommon.constant.BaseConstant;
+import com.zdf.internalcommon.constant.StatusCode;
 import com.zdf.internalcommon.entity.AdminRole;
 import com.zdf.internalcommon.result.ResponseResult;
 import com.zdf.ssyxweb.mapper.AdminRoleMapper;
@@ -36,11 +37,17 @@ public class AdminRoleServiceImpl extends ServiceImpl<AdminRoleMapper, AdminRole
         List<AdminRole> adminRoles = selectRoleIdByUserId(userId);
         List<Long> idList = adminRoles.stream().map(AdminRole::getId).collect(Collectors.toList());
         int count = adminRoleMapper.deleteBatchIds(idList);
+        if (count <= 0){
+            return ResponseResult.fail(StatusCode.DELETE_ADMIN_ROLE_ERROR.getCode(), StatusCode.DELETE_ADMIN_ROLE_ERROR.getMessage());
+        }
         return ResponseResult.success(count);
     }
 
     public ResponseResult<Integer> addAdminRole(AdminRole adminRole){
         int count = adminRoleMapper.insert(adminRole);
+        if (count <= 0){
+            return ResponseResult.fail(StatusCode.INSERT_ADMIN_ROLE_ERROR.getCode(), StatusCode.INSERT_ADMIN_ROLE_ERROR.getMessage());
+        }
         return ResponseResult.success(count);
     }
 }

@@ -1,5 +1,6 @@
 package com.zdf.ssyxweb.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.zdf.internalcommon.constant.BaseConstant;
 import com.zdf.internalcommon.entity.Permission;
@@ -29,7 +30,9 @@ public class PermissionServiceImpl extends ServiceImpl<PermissionMapper, Permiss
 
     @Override
     public ResponseResult<List<QueryAllMenuResponseDto>> queryAllMenu() {
-        List<Permission> permissionList = permissionMapper.selectList(null);
+        QueryWrapper<Permission> permissionQueryWrapper = new QueryWrapper<>();
+        permissionQueryWrapper.eq("is_deleted", BaseConstant.NOTDELETE);
+        List<Permission> permissionList = permissionMapper.selectList(permissionQueryWrapper);
         List<QueryAllMenuResponseDto> menuList = permissionList.stream().filter(permission -> Objects.equals(permission.getPid(), BaseConstant.ROOT))
                 .map(permission -> {
                     QueryAllMenuResponseDto queryAllMenuResponseDto = new QueryAllMenuResponseDto();
